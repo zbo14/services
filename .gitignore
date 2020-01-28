@@ -3,5 +3,6 @@
 *.gpg
 *.key
 *.log
+*.pem
 *.pid
 *.swp
