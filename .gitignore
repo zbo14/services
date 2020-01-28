@@ -1,0 +1,7 @@
+*.asc
+.DS_Store
+*.gpg
+*.key
+*.log
+*.pid
+*.swp

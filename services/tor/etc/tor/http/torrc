@@ -1,0 +1,2 @@
+DNSPort 53
+HTTPTunnelPort 0.0.0.0:1337

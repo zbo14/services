@@ -1,0 +1,36 @@
+version: '3.7'
+
+networks:
+  tor:
+    name: tor
+
+services:
+  gateway:
+    depends_on:
+      - http_proxy
+      - socks_proxy
+    image: haproxy:2.1.2
+    networks:
+      - tor
+    ports:
+      - 1337:1337
+      - 9050:9050
+    restart: always
+    volumes:
+      - $PWD/etc/haproxy:/usr/local/etc/haproxy:ro
+
+  http_proxy:
+    build: .
+    networks:
+      - tor
+    restart: always
+    volumes:
+      - $PWD/etc/tor/http:/etc/tor:ro
+
+  socks_proxy:
+    build: .
+    networks:
+      - tor
+    restart: always
+    volumes:
+      - $PWD/etc/tor/socks:/etc/tor:ro
