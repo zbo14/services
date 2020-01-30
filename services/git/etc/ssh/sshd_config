@@ -1,0 +1,5 @@
+AllowTcpForwarding no
+AllowUsers git
+PasswordAuthentication no
+PermitRootLogin no
+Protocol 2
