@@ -1,9 +1,1 @@
-*.asc
 .DS_Store
-*.gpg
-id_*
-*.key
-*.log
-*.pem
-*.pid
-*.swp

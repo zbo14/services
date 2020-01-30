@@ -1,0 +1,4 @@
+.ssh
+etc/ssh/*
+!etc/ssh/sshd_config
+projects
