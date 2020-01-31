@@ -3,6 +3,7 @@
 dir="$(realpath "$(dirname "$0")"/..)"
 
 docker run \
+    -d \
     --init \
     --name git \
     -p 22:22 \
