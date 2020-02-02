@@ -1,4 +1,4 @@
 #!/bin/bash -e
 
 touch /var/lib/dhcp/dhcpd.leases
-dhcpd -f
+dhcpd -4 -d
