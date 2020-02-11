@@ -2,6 +2,8 @@
 
 This service runs [mitmproxy](https://mitmproxy.org/) on port 8080.
 
+Please refer to the mitmproxy [docs](https://docs.mitmproxy.org/stable/) for more information on usage.
+
 ## Usage
 
 ### Pull
