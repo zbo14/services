@@ -7,5 +7,5 @@ docker run \
     --name mitmproxy \
     -p 8080:8080 \
     --rm \
-    -v $dir/.mitmproxy:/home/mitmproxy/.mitmproxy \
+    -v "$dir"/.mitmproxy:/home/mitmproxy/.mitmproxy \
     mitmproxy/mitmproxy
