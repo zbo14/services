@@ -1,0 +1,27 @@
+version: '3.7'
+
+networks:
+  nginx-web-server:
+    name: nginx-web-server
+
+services:
+  nginx:
+    depends_on:
+      - php-fpm
+    image: nginx:1.17.8
+    networks:
+      - nginx-web-server
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - $PWD/etc/nginx:/etc/nginx:ro
+      - $PWD/usr/share/www:/usr/share/www:ro
+
+  php-fpm:
+    image: php:7.4-fpm
+    networks:
+      - nginx-web-server
+    restart: always
+    volumes:
+      - $PWD/usr/share/www:/usr/share/www:ro
