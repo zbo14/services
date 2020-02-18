@@ -5,8 +5,15 @@ networks:
     name: nginx-web-server
 
 services:
+  db:
+    image: postgres
+    networks:
+      - nginx-web-server
+    restart: always
+
   nginx:
     depends_on:
+      - db
       - php-fpm
     image: nginx:1.17.8
     networks:
@@ -17,11 +24,13 @@ services:
     volumes:
       - $PWD/etc/nginx:/etc/nginx:ro
       - $PWD/usr/share/www:/usr/share/www:ro
+      - $PWD/usr/local/etc/php:/usr/local/etc/php:ro
 
   php-fpm:
-    image: php:7.4-fpm
+    build: .
     networks:
       - nginx-web-server
     restart: always
     volumes:
       - $PWD/usr/share/www:/usr/share/www:ro
+      - $PWD/usr/local/etc/php:/usr/local/etc/php:ro
