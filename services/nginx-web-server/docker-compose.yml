@@ -4,12 +4,26 @@ networks:
   nginx-web-server:
     name: nginx-web-server
 
+secrets:
+  db-passwd:
+    file: db-passwd
+
+volumes:
+  dbdata:
+
 services:
   db:
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-passwd
     image: postgres
     networks:
       - nginx-web-server
     restart: always
+    secrets:
+      - db-passwd
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - $PWD/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   nginx:
     depends_on:
@@ -24,13 +38,14 @@ services:
     volumes:
       - $PWD/etc/nginx:/etc/nginx:ro
       - $PWD/usr/share/www:/usr/share/www:ro
-      - $PWD/usr/local/etc/php:/usr/local/etc/php:ro
 
   php-fpm:
     build: .
     networks:
       - nginx-web-server
     restart: always
+    secrets:
+      - db-passwd
     volumes:
       - $PWD/usr/share/www:/usr/share/www:ro
       - $PWD/usr/local/etc/php:/usr/local/etc/php:ro
