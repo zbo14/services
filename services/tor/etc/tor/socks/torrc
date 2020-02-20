@@ -1,1 +1,2 @@
+ServerDNSResolvConfFile /etc/tor/resolv.conf
 SocksPort 0.0.0.0:9050

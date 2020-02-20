@@ -2,6 +2,9 @@ version: '3.7'
 
 networks:
   tor:
+    ipam:
+      config:
+        - subnet: "172.16.200.0/24"
     name: tor
 
 services:
@@ -10,9 +13,8 @@ services:
       context: .
       dockerfile: dns.Dockerfile
     networks:
-      - tor
-    ports:
-      - 53:53
+      tor:
+        ipv4_address: 172.16.200.100
     restart: always
     volumes:
       - $PWD/etc/dnsmasq:/etc/dnsmasq:ro
@@ -46,6 +48,8 @@ services:
     build:
       context: .
       dockerfile: proxy.Dockerfile
+    depends_on:
+      - dns
     networks:
       - tor
     restart: always
