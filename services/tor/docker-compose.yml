@@ -2,9 +2,24 @@ version: '3.7'
 
 networks:
   tor:
+    ipam:
+      config:
+        - subnet: "172.16.200.0/24"
     name: tor
 
 services:
+  dns:
+    build:
+      context: .
+      dockerfile: dns.Dockerfile
+    networks:
+      tor:
+        ipv4_address: 172.16.200.100
+    restart: always
+    volumes:
+      - $PWD/etc/dnsmasq:/etc/dnsmasq:ro
+      - $PWD/etc/tor/dns:/etc/tor:ro
+
   gateway:
     depends_on:
       - http_proxy
@@ -20,7 +35,9 @@ services:
       - $PWD/etc/haproxy:/usr/local/etc/haproxy:ro
 
   http_proxy:
-    build: .
+    build:
+      context: .
+      dockerfile: proxy.Dockerfile
     networks:
       - tor
     restart: always
@@ -28,7 +45,11 @@ services:
       - $PWD/etc/tor/http:/etc/tor:ro
 
   socks_proxy:
-    build: .
+    build:
+      context: .
+      dockerfile: proxy.Dockerfile
+    depends_on:
+      - dns
     networks:
       - tor
     restart: always
