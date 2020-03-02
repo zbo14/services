@@ -46,8 +46,6 @@ The [setup script](#setup) configures this value for you, but you can change it 
 
 The file `./etc/dhcp/dhcpd.conf` contains configuration for [dhcpd](https://linux.die.net/man/8/dhcpd).
 
-The default subnet is "192.168.1.0/24". The address of the interface on *this* device is "192.168.1.2" (configured during [setup](#setup)).
-
-*Other* devices on the subnet will use addresses in the range "192.168.1.3" -> "192.168.1.254".
+The default subnet is "192.168.1.0/24". The address of the interface on *this* device is "192.168.1.2" (configured during [setup](#setup)). *Other* devices on the subnet will use addresses in the range "192.168.1.3" -> "192.168.1.254".
 
 The DNS nameserver defaults to "192.168.1.1", presumably the gateway/router.
