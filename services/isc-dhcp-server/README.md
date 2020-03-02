@@ -10,6 +10,12 @@ This service runs a DHCP server on the host's network.
 
 Build the Docker image for the DHCP server.
 
+### Setup
+
+`$ sh scripts/setup.sh <iface>`
+
+Set the static IPv4 address and default route for the network interface.
+
 ### Start
 
 `$ sh scripts/start.sh`
@@ -24,7 +30,7 @@ This creates volumes for the `./etc` and `./var/lib/dhcp` directories if the vol
 
 `$ sh scripts/stop.sh`
 
-Stop/remove the Docker container running the DHCP server.
+Stop the Docker container, remove it and its volumes.
 
 ## Config
 
@@ -32,26 +38,16 @@ Stop/remove the Docker container running the DHCP server.
 
 Find the config file at `./etc/default/isc-dhcp-server`.
 
-You should set `INTERFACES` to the network interface that connects your device to the local network (e.g. `eth0`).
+`INTERFACES` should be the network interface that connects your device to the local network (e.g. `eth0`).
+
+The [setup script](#setup) configures this value for you, but you can change it manually.
 
 ### dhcpd
 
 The file `./etc/dhcp/dhcpd.conf` contains configuration for [dhcpd](https://linux.die.net/man/8/dhcpd).
 
-The default subnet is "192.168.1.0/24" and *other* devices on the subnet will use addresses in the range "192.168.1.3" -> "192.168.1.254".
+The default subnet is "192.168.1.0/24". The address of the interface on *this* device is "192.168.1.2" (configured during [setup](#setup)).
 
-You may change this subnet or add other subnets.
+*Other* devices on the subnet will use addresses in the range "192.168.1.3" -> "192.168.1.254".
 
-### DNS
-
-The nameservers are defined in `./etc/resolv.conf` and also specified in `./etc/dhcp/dhcpd.conf`.
-
-By default, these are Google DNS (i.e. "8.8.8.8" and "8.8.4.4") but you can use other servers if you choose.
-
-### interfaces
-
-`./etc/network/interfaces` assigns a static IP address to the DHCP server on the device's network interface.
-
-By default, the static IP is "192.168.1.2" but this value may be modified.
-
-Make sure the interface matches the one you specified in `./etc/default/isc-dhcp-server`.
+The DNS nameserver defaults to "192.168.1.1", presumably the gateway/router.
