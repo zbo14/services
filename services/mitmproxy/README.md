@@ -6,17 +6,13 @@ Please refer to the mitmproxy [docs](https://docs.mitmproxy.org/stable/) for mor
 
 ## Usage
 
-### Pull
-
-`$ sh scripts/pull.sh`
-
-Pull the Docker image for mitmproxy.
-
 ### Start
 
 `$ sh scripts/start.sh`
 
 Start a container running the interactive HTTPS proxy.
+
+This will pull the Docker image if it hasn't been pulled.
 
 ### Stop
 
