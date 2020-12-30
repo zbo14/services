@@ -8,6 +8,7 @@ For more information on a particular service, please refer to the `README.md` in
 
 ## Index
 
+* [Cloud server](services/cloud-server)
 * [Git server](services/git)
 * [ISC DHCP server](services/isc-dhcp-server)
 * [mitmproxy](services/mitmproxy)
