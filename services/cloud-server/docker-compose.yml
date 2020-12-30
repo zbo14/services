@@ -1,0 +1,59 @@
+version: '3.7'
+
+secrets:
+  admin_user:
+    file: ./secrets/admin_user.txt
+  admin_password:
+    file: ./secrets/admin_password.txt
+  postgres_db:
+    file: ./secrets/postgres_db.txt
+  postgres_user:
+    file: ./secrets/postgres_user.txt
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+
+services:
+  app:
+    depends_on:
+      - db
+    env_file:
+      - app.env
+      - db.env
+    image: nextcloud
+    ports:
+      - 80:80
+    restart: always
+    secrets:
+      - admin_user
+      - admin_password
+      - postgres_db
+      - postgres_user
+      - postgres_password
+    volumes:
+      - nextcloud:/var/www/html
+
+  db:
+    env_file:
+      - db.env
+    image: postgres
+    restart: always
+    secrets:
+      - postgres_db
+      - postgres_user
+      - postgres_password
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  proxy:
+    depends_on:
+      - app
+    image: haproxy:2.3.0
+    ports:
+      - 443:443
+    restart: always
+    volumes: 
+      - $PWD/etc/haproxy:/usr/local/etc/haproxy:ro
+
+volumes:
+  db:
+  nextcloud:
