@@ -4,7 +4,7 @@ This service runs a git server, i.e. an SSH server with git installed.
 
 This is useful if you'd like to host repositories on a private network or from an address/hostname you own.
 
-[Here's](https://zbo14.github.io/2020/02/10/Passing-passwords-to-myself.html) a writeup describing a use case for an encrypted password store.
+[Here's](https://zachh.me/blog/passing-passwords-to-myself) a writeup describing a use case for an encrypted password store.
 
 ## Usage
 
