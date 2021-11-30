@@ -1,0 +1,47 @@
+version: '3.7'
+
+networks:
+  seafile-net:
+
+services:
+  db:
+    image: mariadb:10.5
+    container_name: seafile-mysql
+    env_file:
+      - db.env
+    volumes:
+      - $PWD/opt/seafile-mysql/db:/var/lib/mysql
+    networks:
+      - seafile-net
+
+  memcached:
+    image: memcached:1.5.6
+    container_name: seafile-memcached
+    entrypoint: memcached -m 256
+    networks:
+      - seafile-net
+
+  proxy:
+    depends_on:
+      - seafile
+    image: haproxy:latest
+    networks:
+      - seafile-net
+    ports:
+      - 443:443
+    restart: always
+    volumes:
+      - $PWD/etc/haproxy:/usr/local/etc/haproxy:ro
+
+  seafile:
+    image: seafileltd/seafile-mc:latest
+    container_name: seafile
+    env_file:
+      - app.env
+    volumes:
+      - $PWD/opt/seafile-data:/shared
+    depends_on:
+      - db
+      - memcached
+    networks:
+      - seafile-net
