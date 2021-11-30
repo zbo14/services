@@ -1,4 +1,4 @@
-# cloud-server
+# nextcloud
 
 This service runs a [Nextcloud](https://nextcloud.com/) server backed by a [PostgreSQL](https://www.postgresql.org/) database.
 
